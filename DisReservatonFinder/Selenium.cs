@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using NUnit.Framework;
@@ -16,6 +17,8 @@ namespace DisReservatonFinder
         private string baseURL;
         private bool acceptNextAlert = true;
         private int _month = 9;
+        private Stopwatch _stopwatch = new Stopwatch();
+        private TimeSpan _lastElapse = new TimeSpan();
 
         [SetUp]
         public void SetupTest()
@@ -23,6 +26,7 @@ namespace DisReservatonFinder
             driver = new FirefoxDriver();
             baseURL = "https://stage-admin.domain.com.au/";
             verificationErrors = new StringBuilder();
+            
         }
 
         [TearDown]
@@ -128,9 +132,32 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
-        private void SearchForReservation(DateTime firstDateToSearch, DateTime lastDateToSearch, string[] timesToSearch,
-            Dictionary<string, string> restaurants)
+        [Test, Explicit]
+        public void Priority_99_CinderellaRoyalTable_Test()
         {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 01),
+                LastDateToSearch = new DateTime(2016, _month, 30),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"90002464", "Cinderella's Royal Table"},
+                },
+                TimesToSearch = new[]
+                {
+                    "80000714", // Dinner
+                }
+            };
+
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
+        }
+
+        private void SearchForReservation(DateTime firstDateToSearch, DateTime lastDateToSearch, string[] timesToSearch, Dictionary<string, string> restaurants)
+        {
+            _stopwatch.Start();
+
             LogInToSite();
 
             GoToReservationPage(10000);
@@ -167,7 +194,6 @@ namespace DisReservatonFinder
                     Thread.Sleep(10000);
                     firstPass = false;
 
-
                     PrintSearchResults(restaurants, dateToSearch, timeToSearch);
                 }
 
@@ -179,8 +205,11 @@ namespace DisReservatonFinder
         {
             foreach (var restaurant in restaurants)
             {
+                
                 Console.WriteLine(
-                    $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People");
+                    $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People - Total Time: {_stopwatch.Elapsed} - Interval: {_stopwatch.Elapsed - _lastElapse}");
+
+                _lastElapse = _stopwatch.Elapsed;
 
                 string timeSlot1 = "";
                 string timeSlot2 = "";
