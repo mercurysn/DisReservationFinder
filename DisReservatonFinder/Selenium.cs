@@ -17,8 +17,9 @@ namespace DisReservatonFinder
         private string baseURL;
         private bool acceptNextAlert = true;
         private int _month = 9;
-        private Stopwatch _stopwatch = new Stopwatch();
+        private readonly Stopwatch _stopwatch = new Stopwatch();
         private TimeSpan _lastElapse = new TimeSpan();
+        private bool _retainWindow = false;
 
         [SetUp]
         public void SetupTest()
@@ -34,7 +35,8 @@ namespace DisReservatonFinder
         {
             try
             {
-                //driver.Quit();
+                if (!_retainWindow)
+                    driver.Quit();
             }
             catch (Exception)
             {
@@ -43,7 +45,7 @@ namespace DisReservatonFinder
             Assert.AreEqual("", verificationErrors.ToString());
         }
 
-        [Test, Explicit]
+        [Test]
         public void Priority_01_BeOurGuest_MK1_Breakfast()
         {
             SearchCriteria searchCriteria = new SearchCriteria
@@ -71,7 +73,7 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
-        [Test, Explicit]
+        [Test]
         public void Priority_02_BeOurGuest_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
@@ -100,7 +102,7 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
-        [Test, Explicit]
+        [Test]
         public void Priority_03_CinderellaRoyalTable_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
@@ -132,6 +134,60 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
+        [Test]
+        public void Priority_04_Fantasti_Lunch()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 10),
+                LastDateToSearch = new DateTime(2016, _month, 10),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"90001272", "Beaches & Cream Soda Shop"},
+                },
+                TimesToSearch = new[]
+                {
+                    "12:00",
+                    "12:30",
+                    "13:00",
+                    "13:30",
+                    "11:30",
+                    "11:00",
+                }
+            };
+
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
+        }
+
+        [Test]
+        public void Priority_05_BeachesAndCream_Lunch()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 10),
+                LastDateToSearch = new DateTime(2016, _month, 10),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"90001272", "Beaches & Cream Soda Shop"},
+                },
+                TimesToSearch = new[]
+                {
+                    "12:00",
+                    "12:30",
+                    "13:00",
+                    "13:30",
+                    "11:30",
+                    "11:00",
+                }
+            };
+
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
+        }
+
         [Test, Explicit]
         public void Priority_99_CinderellaRoyalTable_Test()
         {
@@ -154,7 +210,7 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
-        private void SearchForReservation(DateTime firstDateToSearch, DateTime lastDateToSearch, string[] timesToSearch, Dictionary<string, string> restaurants)
+        private void SearchForReservation(DateTime firstDateToSearch, DateTime lastDateToSearch, string[] timesToSearch, Dictionary<string, string> restaurants, bool isPackage = false)
         {
             _stopwatch.Start();
 
@@ -194,10 +250,80 @@ namespace DisReservatonFinder
                     Thread.Sleep(10000);
                     firstPass = false;
 
-                    PrintSearchResults(restaurants, dateToSearch, timeToSearch);
+                    if (isPackage)
+                    {
+                        PrintPackageSearchResults(restaurants, dateToSearch, timeToSearch);
+                    }
+                    else
+                    {
+                        PrintSearchResults(restaurants, dateToSearch, timeToSearch);
+                    }
                 }
 
                 dateToSearch = dateToSearch.AddDays(1);
+            }
+        }
+
+        private void PrintPackageSearchResults(Dictionary<string, string> restaurants, DateTime dateToSearch, string timeToSearch)
+        {
+            foreach (var restaurant in restaurants)
+            {
+
+                Console.WriteLine(
+                    $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People - Total Time: {_stopwatch.Elapsed} - Interval: {_stopwatch.Elapsed - _lastElapse}");
+
+                _lastElapse = _stopwatch.Elapsed;
+
+                string timeSlot1 = "";
+                string timeSlot2 = "";
+                string timeSlot3 = "";
+
+                try
+                {
+                    timeSlot1 =
+                        driver.FindElement(
+                            By.XPath(
+                                $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=restaurant\"]/div[1]/div[1]/div/div[2]/div[2]/span[1]/span/span"))
+                            .Text;
+                }
+                catch (Exception)
+                {
+                }
+                try
+                {
+                    timeSlot2 =
+                        driver.FindElement(
+                            By.XPath(
+                                $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=restaurant\"]/div[1]/div[1]/div/div[2]/div[2]/span[2]/span/span"))
+                            .Text;
+                }
+                catch (Exception)
+                {
+                }
+                try
+                {
+                    timeSlot3 =
+                        driver.FindElement(
+                            By.XPath(
+                                $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=restaurant\"]/div[1]/div[1]/div/div[2]/div[2]/span[3]/span/span"))
+                            .Text;
+                }
+                catch (Exception)
+                {
+                }
+
+                if (!string.IsNullOrEmpty(timeSlot1))
+                    Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
+                else
+                    Console.WriteLine("No reservations available");
+
+                if (!string.IsNullOrEmpty(timeSlot2))
+                    Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
+
+                if (!string.IsNullOrEmpty(timeSlot3))
+                    Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
+
+                Console.WriteLine();
             }
         }
 
@@ -304,10 +430,13 @@ namespace DisReservatonFinder
 
         private void DoSearch(DateTime dateToSearch, string timeToSearch, bool openNewTab = true)
         {
-            if (openNewTab)
-                OpenNewTab();
+            if (_retainWindow)
+            {
+                if (openNewTab)
+                    OpenNewTab();
 
-            GoToReservationPage(4000);
+                GoToReservationPage(4000);
+            }
 
             EnterPartySize();
 
