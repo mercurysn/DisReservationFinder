@@ -188,6 +188,35 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
+        [Test]
+        public void Priority_06_Fantasmic_Package()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 3),
+                LastDateToSearch = new DateTime(2016, _month, 3),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"17736028", "Fantasmic Dinner Package"},
+                },
+                TimesToSearch = new[]
+                {
+                    "18:00",
+                    "17:30",
+                    "17:00",
+                    "16:30",
+                    "16:00",
+                    "13:00",
+                    "12:30",
+                    "11:30",
+                }
+            };
+
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, true);
+        }
+
         [Test, Explicit]
         public void Priority_99_CinderellaRoyalTable_Test()
         {
@@ -278,52 +307,70 @@ namespace DisReservatonFinder
                 string timeSlot2 = "";
                 string timeSlot3 = "";
 
-                try
-                {
-                    timeSlot1 =
-                        driver.FindElement(
-                            By.XPath(
-                                $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=restaurant\"]/div[1]/div[1]/div/div[2]/div[2]/span[1]/span/span"))
-                            .Text;
-                }
-                catch (Exception)
-                {
-                }
-                try
-                {
-                    timeSlot2 =
-                        driver.FindElement(
-                            By.XPath(
-                                $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=restaurant\"]/div[1]/div[1]/div/div[2]/div[2]/span[2]/span/span"))
-                            .Text;
-                }
-                catch (Exception)
-                {
-                }
-                try
-                {
-                    timeSlot3 =
-                        driver.FindElement(
-                            By.XPath(
-                                $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=restaurant\"]/div[1]/div[1]/div/div[2]/div[2]/span[3]/span/span"))
-                            .Text;
-                }
-                catch (Exception)
-                {
-                }
 
-                if (!string.IsNullOrEmpty(timeSlot1))
-                    Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
-                else
-                    Console.WriteLine("No reservations available");
+                Dictionary<string, string> packageRestaurants = new Dictionary<string, string>
+                {
+                    {"90002245", "The Hollywood Brown Derby" },
+                    {"90001744", "Hollywood & Vine" },
+                    {"90001865", "Mama Melrose's Ristorante Italiano" },
 
-                if (!string.IsNullOrEmpty(timeSlot2))
-                    Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
+                };
 
-                if (!string.IsNullOrEmpty(timeSlot3))
-                    Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
+                foreach (var packageRestaurant in packageRestaurants)
+                {
 
-                Console.WriteLine();
+
+
+                    try
+                    {
+                        timeSlot1 =
+                            driver.FindElement(
+                                By.XPath(
+                                    $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=Dining-Event\"]/div[1]/div[1]/div/div[2]/span/span/div[@data-facilityid=\"{packageRestaurant.Key}\"]/div/div[2]/div/span[1]/span/span")).Text;
+                    }
+                    catch (Exception)
+                    {
+                        timeSlot1 = "";
+                    }
+                    try
+                    {
+                        timeSlot2 =
+                            driver.FindElement(
+                                By.XPath(
+                                    $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=Dining-Event\"]/div[1]/div[1]/div/div[2]/span/span/div[@data-facilityid=\"{packageRestaurant.Key}\"]/div/div[2]/div/span[2]/span/span"))
+                                .Text;
+                    }
+                    catch (Exception)
+                    {
+                        timeSlot2 = "";
+                    }
+                    try
+                    {
+                        timeSlot3 =
+                            driver.FindElement(
+                                By.XPath(
+                                    $"//*[@id=\"withAvailability-alpha-default\"]/li[@data-entityid=\"{restaurant.Key};entityType=Dining-Event\"]/div[1]/div[1]/div/div[2]/span/span/div[@data-facilityid=\"{packageRestaurant.Key}\"]/div/div[2]/div/span[3]/span/span"))
+                                .Text;
+                    }
+                    catch (Exception)
+                    {
+                        timeSlot3 = "";
+                    }
+
+                    Console.WriteLine($"{packageRestaurant.Value}:");
+                    if (!string.IsNullOrEmpty(timeSlot1))
+                        Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
+                    else
+                        Console.WriteLine("No reservations available");
+
+                    if (!string.IsNullOrEmpty(timeSlot2))
+                        Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
+
+                    if (!string.IsNullOrEmpty(timeSlot3))
+                        Console.WriteLine($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
+
+                    Console.WriteLine();
+                }
             }
         }
 
