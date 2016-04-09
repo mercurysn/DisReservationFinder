@@ -46,7 +46,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_01_BeOurGuest_MK1_Breakfast()
+        public void Priority_01_02_BeOurGuest_MK1_Breakfast()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -58,11 +58,9 @@ namespace DisReservatonFinder
                 },
                 TimesToSearch = new[]
                 {
-                    "07:30",
                     "08:00",
                     "08:30",
                     "09:00",
-                    "80000712", // Breakfast
                     //"80000717", // Lunch
                     //"80000714", // Dinner
                 }
@@ -74,7 +72,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_02_BeOurGuest_Dinner()
+        public void Priority_03_BeOurGuest_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -93,7 +91,6 @@ namespace DisReservatonFinder
                     "17:00",
                     "16:30",
                     "16:00",
-                    "80000714", // Dinner
                 }
             };
 
@@ -103,7 +100,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_03_CinderellaRoyalTable_Dinner()
+        public void Priority_04_CinderellaRoyalTable_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -125,7 +122,6 @@ namespace DisReservatonFinder
                     "21:00",
                     "17:00",
                     "16:30",
-                    "80000714", // Dinner
                 }
             };
 
@@ -135,7 +131,34 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_04_Fantasti_Lunch()
+        public void Priority_06_California_Grill_Dinner()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 16),
+                LastDateToSearch = new DateTime(2016, _month, 16),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"90001336", "California Grill"},
+                },
+                TimesToSearch = new[]
+                {
+                    "20:30",
+                    "21:00",
+                    "20:00",
+                    "19:30",
+                    "19:00",
+                    "18:30",
+                }
+            };
+
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
+        }
+
+        [Test]
+        public void Priority_07_BeachesAndCream_Lunch()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -147,54 +170,124 @@ namespace DisReservatonFinder
                 },
                 TimesToSearch = new[]
                 {
-                    "12:00",
-                    "12:30",
                     "13:00",
+                    "12:30",
+                    "12:00",
                     "13:30",
-                    "11:30",
+                    "14:00",
                     "11:00",
                 }
             };
-
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
         [Test]
-        public void Priority_05_BeachesAndCream_Lunch()
+        public void Priority_08_SciFiDineInTheater_Lunch()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
-                FirstDateToSearch = new DateTime(2016, _month, 10),
-                LastDateToSearch = new DateTime(2016, _month, 10),
+                FirstDateToSearch = new DateTime(2016, _month, 14),
+                LastDateToSearch = new DateTime(2016, _month, 14),
                 RestaurantsToSearch = new Dictionary<string, string>
                 {
-                    {"90001272", "Beaches & Cream Soda Shop"},
+                    {"90002114", "Sci-Fi Dine-In Theater Restaurant"},
                 },
                 TimesToSearch = new[]
                 {
+                    "11:00",
+                    "11:30",
                     "12:00",
                     "12:30",
                     "13:00",
-                    "13:30",
-                    "11:30",
-                    "11:00",
+                    "10:00",
                 }
             };
-
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
         }
 
         [Test]
-        public void Priority_06_Fantasmic_Package()
+        public void Priority_09_Ohana_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
-                FirstDateToSearch = new DateTime(2016, _month, 3),
-                LastDateToSearch = new DateTime(2016, _month, 3),
+                FirstDateToSearch = new DateTime(2016, _month, 13),
+                LastDateToSearch = new DateTime(2016, _month, 13),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"90002606", "'Ohana"},
+                },
+                TimesToSearch = new[]
+                {
+                    "20:30",
+                    "21:00",
+                    "20:00",
+                    "19:30",
+                    "19:00",
+                }
+            };
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
+        }
+
+        [Test]
+        public void Priority_10_VanNapoliRistoranteEPizzeria_Dinner()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 17),
+                LastDateToSearch = new DateTime(2016, _month, 17),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"15525574", "Van Napoli Ristorante e Pizzeria"},
+                },
+                TimesToSearch = new[]
+                {
+                    "21:00",
+                    "20:30",
+                }
+            };
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
+        }
+
+        [Test]
+        public void Priority_11_SanAngelInnRestaurante_Dinner()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 11),
+                LastDateToSearch = new DateTime(2016, _month, 11),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"90002100", "San Angel Inn Restaurante"},
+                },
+                TimesToSearch = new[]
+                {
+                    "19:30",
+                    "19:00",
+                    "18:30",
+                    "18:00",
+                    "17:30",
+                }
+            };
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch);
+        }
+
+        [Test]
+        public void Priority_05_Fantasmic_Package()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 14),
+                LastDateToSearch = new DateTime(2016, _month, 14),
                 RestaurantsToSearch = new Dictionary<string, string>
                 {
                     {"17736028", "Fantasmic Dinner Package"},
