@@ -16,7 +16,7 @@ namespace DisReservatonFinder
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
-        private int _month = 9;
+        private int _month = 10;
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private TimeSpan _lastElapse = new TimeSpan();
         private bool _retainWindow = false;
