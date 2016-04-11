@@ -16,7 +16,7 @@ namespace DisReservatonFinder
         private StringBuilder verificationErrors;
         private string baseURL;
         private bool acceptNextAlert = true;
-        private int _month = 10;
+        private int _month = 9;
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private TimeSpan _lastElapse = new TimeSpan();
         private bool _retainWindow = false;
@@ -46,7 +46,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Run_01Priority_01_02_BeOurGuest_MK1_Breakfast()
+        public void Run_01_Priority_01_02_BeOurGuest_MK1_Breakfast()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -100,7 +100,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Run_01Priority_04_CinderellaRoyalTable_Dinner()
+        public void Run_01_Priority_04_CinderellaRoyalTable_Dinnerr()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -564,7 +564,7 @@ namespace DisReservatonFinder
             driver.FindElement(By.Id("loginPageUsername")).Clear();
             driver.FindElement(By.Id("loginPageUsername")).SendKeys("sng2005@gmail.com");
             driver.FindElement(By.Id("loginPagePassword")).Clear();
-            driver.FindElement(By.Id("loginPagePassword")).SendKeys("abcd1234");
+            driver.FindElement(By.Id("loginPagePassword")).SendKeys("abcd12345");
             driver.FindElement(By.Id("loginPageSubmitButton")).Click();
         }
 
