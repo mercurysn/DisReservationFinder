@@ -46,7 +46,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_01_02_BeOurGuest_MK1_Breakfast()
+        public void Run_01Priority_01_02_BeOurGuest_MK1_Breakfast()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -72,7 +72,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_03_BeOurGuest_Dinner()
+        public void Run_02_Priority_03_BeOurGuest_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -100,7 +100,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_04_CinderellaRoyalTable_Dinner()
+        public void Run_01Priority_04_CinderellaRoyalTable_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -131,7 +131,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_06_California_Grill_Dinner()
+        public void Run_01_Priority_06_California_Grill_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -158,7 +158,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_07_BeachesAndCream_Lunch()
+        public void Run_02_Priority_07_BeachesAndCream_Lunch()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -184,7 +184,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_08_SciFiDineInTheater_Lunch()
+        public void Run_01_Priority_08_SciFiDineInTheater_Lunch()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -210,7 +210,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_09_Ohana_Dinner()
+        public void Run_02_Priority_09_Ohana_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -235,7 +235,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_10_VanNapoliRistoranteEPizzeria_Dinner()
+        public void Run_01_Priority_10_VanNapoliRistoranteEPizzeria_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -257,7 +257,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_11_SanAngelInnRestaurante_Dinner()
+        public void Run_02_Priority_11_SanAngelInnRestaurante_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -282,7 +282,7 @@ namespace DisReservatonFinder
         }
 
         [Test]
-        public void Priority_05_Fantasmic_Package()
+        public void Run_02_Priority_05_Fantasmic_Package()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
