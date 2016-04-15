@@ -28,7 +28,6 @@ namespace DisReservatonFinder
             driver = new FirefoxDriver();
             baseURL = "https://stage-admin.domain.com.au/";
             verificationErrors = new StringBuilder();
-            driver.Manage().Window.
             
         }
 
@@ -126,7 +125,7 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 12, 18, 30, 0));
         }
 
-        [Test]
+        [Test, Explicit]
         public void Priority_06_California_Grill_Dinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
@@ -145,7 +144,7 @@ namespace DisReservatonFinder
 
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 16, 20, 35, 0), new DateTime(2016, 10, 16, 20, 50, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 16, 20, 50, 0), new DateTime(2016, 10, 16, 20, 50, 0));
         }
 
         [Test]
@@ -161,14 +160,13 @@ namespace DisReservatonFinder
                 },
                 TimesToSearch = new[]
                 {
-                    "13:00",
-                    "12:30",
-                    "12:00",
+                    "19:00",
+                    "19:30",
                 }
             };
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 10, 13, 0, 0), new DateTime(2016, 10, 10, 14, 00, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 10, 19, 30, 0), new DateTime(2016, 10, 10, 13, 00, 0));
         }
 
         [Test, Explicit]
