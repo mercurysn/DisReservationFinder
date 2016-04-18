@@ -21,11 +21,13 @@ namespace DisReservatonFinder
         private readonly Stopwatch _stopwatch = new Stopwatch();
         private TimeSpan _lastElapse = new TimeSpan();
         private bool _retainWindow = false;
+        private bool _isLoggedIn = false;
 
         [SetUp]
         public void SetupTest()
         {
             driver = new FirefoxDriver();
+            driver.Manage().Window.Maximize();
             baseURL = "https://stage-admin.domain.com.au/";
             verificationErrors = new StringBuilder();
             
@@ -47,7 +49,25 @@ namespace DisReservatonFinder
         }
 
         [Test]
+        public void Priority_00_SearchForEverything()
+        {
+            SearchForBogBreakfast();
+            SearchForBOGDinner();
+            SearchForCRTDinner();
+            //SearchForCRTDinnerBackups();
+            SearchForBCDinner();
+            SearchForFantasmicPackage();
+            SearchForOhanaDinner();
+            SearchForVanDinner();
+        }
+
+        [Test, Explicit]
         public void Priority_01_02_BeOurGuest_MK1_Breakfast()
+        {
+            SearchForBogBreakfast();
+        }
+
+        private void SearchForBogBreakfast()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -68,11 +88,17 @@ namespace DisReservatonFinder
 
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 12, 8 ,0, 0), new DateTime(2016, 10, 12, 8, 10, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 12, 8, 0, 0),
+                new DateTime(2016, 10, 12, 8, 10, 0));
         }
 
-        [Test]
+        [Test, Explicit]
         public void Priority_03_BeOurGuest_Dinner()
+        {
+            SearchForBOGDinner();
+        }
+
+        private void SearchForBOGDinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -91,11 +117,47 @@ namespace DisReservatonFinder
 
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 18, 19, 00, 0), new DateTime(2016, 10, 18, 17, 55, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 18, 19, 00, 0),
+                new DateTime(2016, 10, 18, 17, 55, 0));
         }
 
-        [Test]
+        [Test, Explicit]
         public void Priority_04_CinderellaRoyalTable_Dinnerr()
+        {
+            SearchForCRTDinner();
+        }
+
+        private void SearchForCRTDinnerBackups()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 19),
+                LastDateToSearch = new DateTime(2016, _month, 20),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"90002464", "Cinderella's Royal Table (Backup)"},
+                },
+                TimesToSearch = new[]
+                {
+                    "18:00",
+                    "18:30",
+                    "19:00",
+                    "19:30",
+                    "20:00",
+                    "20:30",
+                    "17:30",
+                    "21:00",
+                    "17:00",
+                    "16:30",
+                }
+            };
+
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 12, 18, 30, 0), new DateTime(2016, 10, 19, 19, 0, 0));
+        }
+
+        private void SearchForCRTDinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -117,6 +179,7 @@ namespace DisReservatonFinder
                     "21:00",
                     "17:00",
                     "16:30",
+                    "21:00",
                 }
             };
 
@@ -147,8 +210,13 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 16, 20, 50, 0), new DateTime(2016, 10, 16, 20, 50, 0));
         }
 
-        [Test]
-        public void Priority_07_BeachesAndCream_Lunch()
+        [Test, Explicit]
+        public void Priority_07_BeachesAndCream_Dinner()
+        {
+            SearchForBCDinner();
+        }
+
+        private void SearchForBCDinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -166,7 +234,8 @@ namespace DisReservatonFinder
             };
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 10, 19, 30, 0), new DateTime(2016, 10, 10, 13, 00, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 10, 19, 30, 0),
+                new DateTime(2016, 10, 10, 13, 00, 0));
         }
 
         [Test, Explicit]
@@ -195,8 +264,13 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 14, 11, 30, 0), new DateTime(2016, 10, 14, 11, 0, 0));
         }
 
-        [Test]
+        [Test, Explicit]
         public void Priority_09_Ohana_Dinner()
+        {
+            SearchForOhanaDinner();
+        }
+
+        private void SearchForOhanaDinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -214,11 +288,17 @@ namespace DisReservatonFinder
             };
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 13, 19, 45, 0), new DateTime(2016, 10, 13, 20, 30, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 13, 19, 45, 0),
+                new DateTime(2016, 10, 13, 20, 30, 0));
         }
 
-        [Test]
+        [Test, Explicit]
         public void Priority_10_VanNapoliRistoranteEPizzeria_Dinner()
+        {
+            SearchForVanDinner();
+        }
+
+        private void SearchForVanDinner()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -235,7 +315,8 @@ namespace DisReservatonFinder
             };
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 17, 21, 0, 0), new DateTime(2016, 10, 17, 20, 25, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 17, 21, 0, 0),
+                new DateTime(2016, 10, 17, 20, 25, 0));
         }
 
         [Test, Explicit]
@@ -263,8 +344,13 @@ namespace DisReservatonFinder
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(), new DateTime());
         }
 
-        [Test]
+        [Test, Explicit]
         public void Priority_05_Fantasmic_Package()
+        {
+            SearchForFantasmicPackage();
+        }
+
+        private void SearchForFantasmicPackage()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
@@ -284,7 +370,8 @@ namespace DisReservatonFinder
 
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 14, 19, 0, 0), new DateTime(2016, 10, 14, 16, 45, 0), true);
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 14, 19, 0, 0),
+                new DateTime(2016, 10, 14, 16, 45, 0), true);
         }
 
         [Test, Explicit]
@@ -313,7 +400,7 @@ namespace DisReservatonFinder
         {
             _stopwatch.Start();
 
-            Console.WriteLine(restaurants.First().Value);
+            Console.WriteLine($"=== {restaurants.First().Value} ===");
             Console.WriteLine($"Ideal Reservation Time: {idealTime.ToString("MM/dd/yyyy hh:mm tt")}");
 
             if (researvationTime != null)
@@ -328,10 +415,14 @@ namespace DisReservatonFinder
                 Console.WriteLine();
             }
 
+            if (!_isLoggedIn)
+            {
+                LogInToSite();
 
-            LogInToSite();
+                GoToReservationPage(10000);
 
-            GoToReservationPage(10000);
+                _isLoggedIn = true;
+            }
 
             DateTime dateToSearch = firstDateToSearch;
 
@@ -385,10 +476,6 @@ namespace DisReservatonFinder
 
             foreach (var restaurant in restaurants)
             {
-                
-
-                
-
                 Console.WriteLine(
                     $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People - Total Time: {_stopwatch.Elapsed} - Interval: {_stopwatch.Elapsed - _lastElapse}");
 
@@ -526,7 +613,7 @@ namespace DisReservatonFinder
                     {
                         Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
                         if (timeSlot1Ok)
-                            Console.WriteLine(" - BOOKED NOW");
+                            Console.WriteLine(" - **** BOOK NOW **** ");
                         else
                             Console.WriteLine(" - no");
                     }
@@ -537,7 +624,7 @@ namespace DisReservatonFinder
                     {
                         Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
                         if (timeSlot2Ok)
-                            Console.WriteLine(" - BOOKED NOW");
+                            Console.WriteLine(" - **** BOOK NOW **** ");
                         else
                             Console.WriteLine(" - no");
                     }
@@ -546,7 +633,7 @@ namespace DisReservatonFinder
                     {
                         Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
                         if (timeSlot3Ok)
-                            Console.WriteLine(" - BOOKED NOW");
+                            Console.WriteLine(" - **** BOOK NOW **** ");
                         else
                             Console.WriteLine(" - no");
                     }
@@ -669,7 +756,7 @@ namespace DisReservatonFinder
                 {
                     Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
                     if (timeSlot1Ok)
-                        Console.WriteLine(" - BOOKED NOW");
+                        Console.WriteLine(" - **** BOOK NOW **** ");
                     else
                         Console.WriteLine(" - no");
                 }
@@ -680,7 +767,7 @@ namespace DisReservatonFinder
                 {
                     Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
                     if (timeSlot2Ok)
-                        Console.WriteLine(" - BOOKED NOW");
+                        Console.WriteLine(" - **** BOOK NOW **** ");
                     else
                         Console.WriteLine(" - no");
                 }
@@ -689,7 +776,7 @@ namespace DisReservatonFinder
                 {
                     Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
                     if (timeSlot3Ok)
-                        Console.WriteLine(" - BOOKED NOW");
+                        Console.WriteLine(" - **** BOOK NOW **** ");
                     else
                         Console.WriteLine(" - no");
                 }
