@@ -53,8 +53,8 @@ namespace DisReservatonFinder
         {
             SearchForBogBreakfast();
             SearchForBOGDinner();
-            SearchForCRTDinner();
-            //SearchForCRTDinnerBackups();
+            //SearchForCRTDinner();
+            SearchForCRTDinnerBackups();
             SearchForBCDinner();
             SearchForFantasmicPackage();
             SearchForOhanaDinner();
@@ -132,7 +132,7 @@ namespace DisReservatonFinder
             SearchCriteria searchCriteria = new SearchCriteria
             {
                 FirstDateToSearch = new DateTime(2016, _month, 19),
-                LastDateToSearch = new DateTime(2016, _month, 20),
+                LastDateToSearch = new DateTime(2016, _month, 19),
                 RestaurantsToSearch = new Dictionary<string, string>
                 {
                     {"90002464", "Cinderella's Royal Table (Backup)"},
@@ -141,20 +141,12 @@ namespace DisReservatonFinder
                 {
                     "18:00",
                     "18:30",
-                    "19:00",
-                    "19:30",
-                    "20:00",
-                    "20:30",
-                    "17:30",
-                    "21:00",
-                    "17:00",
-                    "16:30",
                 }
             };
 
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 12, 18, 30, 0), new DateTime(2016, 10, 19, 19, 0, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 19, 18, 00, 0), new DateTime(2016, 10, 19, 19, 0, 0));
         }
 
         private void SearchForCRTDinner()
@@ -230,6 +222,8 @@ namespace DisReservatonFinder
                 {
                     "19:00",
                     "19:30",
+                    "20:00",
+                    "20:30",
                 }
             };
 
@@ -355,7 +349,7 @@ namespace DisReservatonFinder
             SearchCriteria searchCriteria = new SearchCriteria
             {
                 FirstDateToSearch = new DateTime(2016, _month, 14),
-                LastDateToSearch = new DateTime(2016, _month, 14),
+                LastDateToSearch = new DateTime(2016, _month, 15),
                 RestaurantsToSearch = new Dictionary<string, string>
                 {
                     {"17736028", "Fantasmic Dinner Package"},
@@ -852,6 +846,12 @@ namespace DisReservatonFinder
             EnterSearchDate(dateToSearch);
 
             driver.FindElement(By.CssSelector("span.buttonText")).Click();
+
+            if (!string.IsNullOrEmpty(driver.FindElement(By.ClassName("warning")).Text))
+            {
+                Console.WriteLine("Error...");
+                throw new Exception();
+            }
         }
 
         private void EnterPartySize()
