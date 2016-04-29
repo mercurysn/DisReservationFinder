@@ -22,6 +22,7 @@ namespace DisReservatonFinder
         private TimeSpan _lastElapse = new TimeSpan();
         private bool _retainWindow = false;
         private bool _isLoggedIn = false;
+        private int _numberOfReservationFound = 0;
 
         [SetUp]
         public void SetupTest()
@@ -53,12 +54,15 @@ namespace DisReservatonFinder
         {
             SearchForBogBreakfast();
             SearchForBOGDinner();
-            //SearchForCRTDinner();
+            SearchForCRTDinner();
             SearchForCRTDinnerBackups();
             SearchForBCDinner();
-            SearchForFantasmicPackage();
+            SearchForFantasmicPackageDay1();
+            SearchForFantasmicPackageDay2();
             SearchForOhanaDinner();
             SearchForVanDinner();
+
+            Console.WriteLine($"Total Reservation Found: {_numberOfReservationFound}");
         }
 
         [Test, Explicit]
@@ -341,15 +345,15 @@ namespace DisReservatonFinder
         [Test, Explicit]
         public void Priority_05_Fantasmic_Package()
         {
-            SearchForFantasmicPackage();
+            SearchForFantasmicPackageDay1();
         }
 
-        private void SearchForFantasmicPackage()
+        private void SearchForFantasmicPackageDay1()
         {
             SearchCriteria searchCriteria = new SearchCriteria
             {
                 FirstDateToSearch = new DateTime(2016, _month, 14),
-                LastDateToSearch = new DateTime(2016, _month, 15),
+                LastDateToSearch = new DateTime(2016, _month, 14),
                 RestaurantsToSearch = new Dictionary<string, string>
                 {
                     {"17736028", "Fantasmic Dinner Package"},
@@ -366,6 +370,30 @@ namespace DisReservatonFinder
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 14, 19, 0, 0),
                 new DateTime(2016, 10, 14, 16, 45, 0), true);
+        }
+
+        private void SearchForFantasmicPackageDay2()
+        {
+            SearchCriteria searchCriteria = new SearchCriteria
+            {
+                FirstDateToSearch = new DateTime(2016, _month, 15),
+                LastDateToSearch = new DateTime(2016, _month, 15),
+                RestaurantsToSearch = new Dictionary<string, string>
+                {
+                    {"17736028", "Fantasmic Dinner Package"},
+                },
+                TimesToSearch = new[]
+                {
+                    "18:00",
+                    "17:30",
+                    "17:00",
+                }
+            };
+
+
+            SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 15, 19, 0, 0),
+                new DateTime(2016, 10, 15, 15, 25, 0), true);
         }
 
         [Test, Explicit]
@@ -462,12 +490,12 @@ namespace DisReservatonFinder
 
                 dateToSearch = dateToSearch.AddDays(1);
             }
+
+            
         }
 
         private void PrintPackageSearchResults(Dictionary<string, string> restaurants, DateTime dateToSearch, string timeToSearch, DateTime idealTime, DateTime? researvationTime = null)
         {
-            
-
             foreach (var restaurant in restaurants)
             {
                 Console.WriteLine(
@@ -490,16 +518,18 @@ namespace DisReservatonFinder
 
                 Dictionary<string, string> packageRestaurants = new Dictionary<string, string>
                 {
-                    {"90002245", "The Hollywood Brown Derby" },
+                    //{"90002245", "The Hollywood Brown Derby" },
                     {"90001744", "Hollywood & Vine" },
-                    {"90001865", "Mama Melrose's Ristorante Italiano" },
+                    //{"90001865", "Mama Melrose's Ristorante Italiano" },
 
                 };
 
                 foreach (var packageRestaurant in packageRestaurants)
                 {
 
-
+                    timeSlot1Ok = false;
+                    timeSlot2Ok = false;
+                    timeSlot3Ok = false;
 
                     try
                     {
@@ -607,7 +637,10 @@ namespace DisReservatonFinder
                     {
                         Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
                         if (timeSlot1Ok)
+                        {
                             Console.WriteLine(" - **** BOOK NOW **** ");
+                            _numberOfReservationFound++;
+                        }
                         else
                             Console.WriteLine(" - no");
                     }
@@ -618,7 +651,10 @@ namespace DisReservatonFinder
                     {
                         Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
                         if (timeSlot2Ok)
+                        {
                             Console.WriteLine(" - **** BOOK NOW **** ");
+                            _numberOfReservationFound++;
+                        }
                         else
                             Console.WriteLine(" - no");
                     }
@@ -627,7 +663,10 @@ namespace DisReservatonFinder
                     {
                         Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
                         if (timeSlot3Ok)
+                        {
                             Console.WriteLine(" - **** BOOK NOW **** ");
+                            _numberOfReservationFound++;
+                        }
                         else
                             Console.WriteLine(" - no");
                     }
@@ -750,7 +789,10 @@ namespace DisReservatonFinder
                 {
                     Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
                     if (timeSlot1Ok)
+                    {
                         Console.WriteLine(" - **** BOOK NOW **** ");
+                        _numberOfReservationFound++;
+                    }
                     else
                         Console.WriteLine(" - no");
                 }
@@ -761,7 +803,10 @@ namespace DisReservatonFinder
                 {
                     Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
                     if (timeSlot2Ok)
+                    {
                         Console.WriteLine(" - **** BOOK NOW **** ");
+                        _numberOfReservationFound++;
+                    }
                     else
                         Console.WriteLine(" - no");
                 }
@@ -770,7 +815,10 @@ namespace DisReservatonFinder
                 {
                     Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
                     if (timeSlot3Ok)
+                    {
                         Console.WriteLine(" - **** BOOK NOW **** ");
+                        _numberOfReservationFound++;
+                    }
                     else
                         Console.WriteLine(" - no");
                 }
