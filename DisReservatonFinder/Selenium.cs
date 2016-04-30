@@ -52,8 +52,16 @@ namespace DisReservatonFinder
         [Test]
         public void Priority_00_SearchForEverything()
         {
+            SearchForEverything();
+            //SearchForVanDinner();
+
+            Console.WriteLine($"Total Reservation Found: {_numberOfReservationFound}");
+        }
+
+        public void SearchForEverything()
+        {
             SearchForBogBreakfast();
-            SearchForBOGDinner();
+            //SearchForBOGDinner();
             SearchForCRTDinner();
             SearchForCRTDinnerBackups();
             SearchForBCDinner();
@@ -61,8 +69,6 @@ namespace DisReservatonFinder
             SearchForFantasmicPackageDay2();
             SearchForOhanaDinner();
             SearchForVanDinner();
-
-            Console.WriteLine($"Total Reservation Found: {_numberOfReservationFound}");
         }
 
         [Test, Explicit]
@@ -84,7 +90,7 @@ namespace DisReservatonFinder
                 TimesToSearch = new[]
                 {
                     "08:00",
-                    "08:30",
+                    //"08:30",
                     //"80000717", // Lunch
                     //"80000714", // Dinner
                 }
@@ -340,6 +346,12 @@ namespace DisReservatonFinder
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
                 searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(), new DateTime());
+        }
+
+        [Test, Explicit]
+        public void TestEmail()
+        {
+            //EmailSender.SendEmail("Beaches & Cream", "10/20/2016", "20:00", $"Beaches & Cream - Search for 10/20/2016 - 20:00 for 5 People");
         }
 
         [Test, Explicit]
@@ -640,6 +652,7 @@ namespace DisReservatonFinder
                         {
                             Console.WriteLine(" - **** BOOK NOW **** ");
                             _numberOfReservationFound++;
+                            EmailSender.SendEmail(packageRestaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot1, $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime);
                         }
                         else
                             Console.WriteLine(" - no");
@@ -654,6 +667,8 @@ namespace DisReservatonFinder
                         {
                             Console.WriteLine(" - **** BOOK NOW **** ");
                             _numberOfReservationFound++;
+                            EmailSender.SendEmail(packageRestaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot2, $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime);
+
                         }
                         else
                             Console.WriteLine(" - no");
@@ -666,6 +681,8 @@ namespace DisReservatonFinder
                         {
                             Console.WriteLine(" - **** BOOK NOW **** ");
                             _numberOfReservationFound++;
+                            EmailSender.SendEmail(packageRestaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot3, $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime);
+
                         }
                         else
                             Console.WriteLine(" - no");
@@ -792,6 +809,7 @@ namespace DisReservatonFinder
                     {
                         Console.WriteLine(" - **** BOOK NOW **** ");
                         _numberOfReservationFound++;
+                        EmailSender.SendEmail(restaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot1, $"Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime);
                     }
                     else
                         Console.WriteLine(" - no");
@@ -806,6 +824,8 @@ namespace DisReservatonFinder
                     {
                         Console.WriteLine(" - **** BOOK NOW **** ");
                         _numberOfReservationFound++;
+                        EmailSender.SendEmail(restaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot2, $"Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime);
+
                     }
                     else
                         Console.WriteLine(" - no");
@@ -818,6 +838,8 @@ namespace DisReservatonFinder
                     {
                         Console.WriteLine(" - **** BOOK NOW **** ");
                         _numberOfReservationFound++;
+                        EmailSender.SendEmail(restaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot3, $"Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime);
+
                     }
                     else
                         Console.WriteLine(" - no");
