@@ -6,7 +6,7 @@ namespace DisReservatonFinder
 {
     public class EmailSender
     {
-        public static void SendEmail(string restaurantName, string searchDate, string searchTime, string heading, DateTime idealTime, DateTime? reservationTime)
+        public static void SendEmail(string restaurantName, string searchDate, string searchTime, string heading, DateTime idealTime, DateTime? reservationTime, DateTime startTime)
         {
             var client = new SmtpClient("smtp.gmail.com", 587)
             {
@@ -17,7 +17,7 @@ namespace DisReservatonFinder
                 ? ""
                 : ((DateTime) reservationTime).ToString("MM/dd/yyyy hh:mm tt");
 
-            client.Send("sngpush@gmail.com", "sngpush@gmail.com", $"{restaurantName} found!", $"{searchDate} - {searchTime}\r\n{heading}\r\nRestaurant: {restaurantName}\r\nIdeal Time: {idealTime.ToString("MM/dd/yyyy hh:mm tt")}\r\nCurrent Reservation Time: {ressieTIme}");
+            client.Send("sngpush@gmail.com", "sngpush@gmail.com", $"{restaurantName} found!", $"{searchDate} - {searchTime}\r\n{heading}\r\nRestaurant: {restaurantName}\r\nIdeal Time: {idealTime.ToString("MM/dd/yyyy hh:mm tt")}\r\nCurrent Reservation Time: {ressieTIme}\r\nProgram Start Time: {startTime.ToString("MM/dd/yyyy hh:mm tt")}");
         }
     }
 }
