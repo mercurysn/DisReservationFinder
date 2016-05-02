@@ -56,7 +56,7 @@ namespace DisReservatonFinder
             SearchForEverything();
             //SearchForVanDinner();
 
-            Console.WriteLine($"Total Reservation Found: {_numberOfReservationFound}");
+            Consoler.WriteLine($"Total Reservation Found: {_numberOfReservationFound}");
         }
 
         public void SearchForEverything()
@@ -435,24 +435,24 @@ namespace DisReservatonFinder
         {
             _stopwatch.Start();
 
-            Console.WriteLine($"=== {restaurants.First().Value} ===");
-            Console.WriteLine($"Ideal Reservation Time: {idealTime.ToString("MM/dd/yyyy hh:mm tt")}");
+            Consoler.WriteLine($"=== {restaurants.First().Value} ===");
+            Consoler.WriteLine($"Ideal Reservation Time: {idealTime.ToString("MM/dd/yyyy hh:mm tt")}");
 
             if (researvationTime != null)
             {
 
-                Console.WriteLine($"Current Reservation Time: {((DateTime)researvationTime).ToString("MM/dd/yyyy hh:mm tt")}");
-                Console.WriteLine();
+                Consoler.WriteLine($"Current Reservation Time: {((DateTime)researvationTime).ToString("MM/dd/yyyy hh:mm tt")}");
+                Consoler.WriteLine();
             }
             else
             {
-                Console.WriteLine("No current reservation.");
-                Console.WriteLine();
+                Consoler.WriteLine("No current reservation.");
+                Consoler.WriteLine();
             }
 
             if (!_isLoggedIn)
             {
-                LogInToSite();
+                //LogInToSite();
 
                 GoToReservationPage(10000);
 
@@ -511,7 +511,7 @@ namespace DisReservatonFinder
         {
             foreach (var restaurant in restaurants)
             {
-                Console.WriteLine(
+                Consoler.WriteLine(
                     $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People - Total Time: {_stopwatch.Elapsed} - Interval: {_stopwatch.Elapsed - _lastElapse}");
 
                 _lastElapse = _stopwatch.Elapsed;
@@ -645,51 +645,51 @@ namespace DisReservatonFinder
                         timeSlot3 = "";
                     }
 
-                    Console.WriteLine($"{packageRestaurant.Value}:");
+                    Consoler.WriteLine($"{packageRestaurant.Value}:");
                     if (!string.IsNullOrEmpty(timeSlot1))
                     {
-                        Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
+                        Consoler.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
                         if (timeSlot1Ok)
                         {
-                            Console.WriteLine(" - **** BOOK NOW **** ");
+                            Consoler.WriteLine(" - **** BOOK NOW **** ");
                             _numberOfReservationFound++;
                             EmailSender.SendEmail(packageRestaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot1, $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime, _startTime);
                         }
                         else
-                            Console.WriteLine(" - no");
+                            Consoler.WriteLine(" - no");
                     }
                     else
-                        Console.WriteLine("No reservations available");
+                        Consoler.WriteLine("No reservations available");
 
                     if (!string.IsNullOrEmpty(timeSlot2))
                     {
-                        Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
+                        Consoler.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
                         if (timeSlot2Ok)
                         {
-                            Console.WriteLine(" - **** BOOK NOW **** ");
+                            Consoler.WriteLine(" - **** BOOK NOW **** ");
                             _numberOfReservationFound++;
                             EmailSender.SendEmail(packageRestaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot2, $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime, _startTime);
 
                         }
                         else
-                            Console.WriteLine(" - no");
+                            Consoler.WriteLine(" - no");
                     }
 
                     if (!string.IsNullOrEmpty(timeSlot3))
                     {
-                        Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
+                        Consoler.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
                         if (timeSlot3Ok)
                         {
-                            Console.WriteLine(" - **** BOOK NOW **** ");
+                            Consoler.WriteLine(" - **** BOOK NOW **** ");
                             _numberOfReservationFound++;
                             EmailSender.SendEmail(packageRestaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot3, $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime, _startTime);
 
                         }
                         else
-                            Console.WriteLine(" - no");
+                            Consoler.WriteLine(" - no");
                     }
 
-                    Console.WriteLine();
+                    Consoler.WriteLine();
                 }
             }
         }
@@ -699,7 +699,7 @@ namespace DisReservatonFinder
             Console.ForegroundColor = ConsoleColor.Green;
             foreach (var restaurant in restaurants)
             {
-                Console.WriteLine(
+                Consoler.WriteLine(
                     $"{restaurant.Value} - Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People - Total Time: {_stopwatch.Elapsed} - Interval: {_stopwatch.Elapsed - _lastElapse}");
 
                 _lastElapse = _stopwatch.Elapsed;
@@ -805,48 +805,48 @@ namespace DisReservatonFinder
 
                 if (!string.IsNullOrEmpty(timeSlot1))
                 {
-                    Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
+                    Consoler.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot1}");
                     if (timeSlot1Ok)
                     {
-                        Console.WriteLine(" - **** BOOK NOW **** ");
+                        Consoler.WriteLine(" - **** BOOK NOW **** ");
                         _numberOfReservationFound++;
                         EmailSender.SendEmail(restaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot1, $"Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime, _startTime);
                     }
                     else
-                        Console.WriteLine(" - no");
+                        Consoler.WriteLine(" - no");
                 }
                 else
-                    Console.WriteLine("No reservations available");
+                    Consoler.WriteLine("No reservations available");
 
                 if (!string.IsNullOrEmpty(timeSlot2))
                 {
-                    Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
+                    Consoler.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot2}");
                     if (timeSlot2Ok)
                     {
-                        Console.WriteLine(" - **** BOOK NOW **** ");
+                        Consoler.WriteLine(" - **** BOOK NOW **** ");
                         _numberOfReservationFound++;
                         EmailSender.SendEmail(restaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot2, $"Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime, _startTime);
 
                     }
                     else
-                        Console.WriteLine(" - no");
+                        Consoler.WriteLine(" - no");
                 }
 
                 if (!string.IsNullOrEmpty(timeSlot3))
                 {
-                    Console.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
+                    Consoler.Write($"{dateToSearch.ToString("MM/dd/yyyy")} - {timeSlot3}");
                     if (timeSlot3Ok)
                     {
-                        Console.WriteLine(" - **** BOOK NOW **** ");
+                        Consoler.WriteLine(" - **** BOOK NOW **** ");
                         _numberOfReservationFound++;
                         EmailSender.SendEmail(restaurant.Value, dateToSearch.ToString("MM/dd/yyyy"), timeSlot3, $"Search for {dateToSearch.ToString("MM/dd/yyyy")} - {timeToSearch} for 5 People", idealTime, researvationTime, _startTime);
 
                     }
                     else
-                        Console.WriteLine(" - no");
+                        Consoler.WriteLine(" - no");
                 }
 
-                Console.WriteLine();
+                Consoler.WriteLine();
             }
         }
 
@@ -920,7 +920,7 @@ namespace DisReservatonFinder
 
             if (!string.IsNullOrEmpty(driver.FindElement(By.ClassName("warning")).Text))
             {
-                Console.WriteLine("Error...");
+                Consoler.WriteLine("Error...");
                 throw new Exception();
             }
         }
