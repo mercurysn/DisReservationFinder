@@ -177,18 +177,13 @@ namespace DisReservatonFinder
                     "19:00",
                     "19:30",
                     "20:00",
-                    "20:30",
                     "17:30",
-                    "21:00",
-                    "17:00",
-                    "16:30",
-                    "21:00",
                 }
             };
 
 
             SearchForReservation(searchCriteria.FirstDateToSearch, searchCriteria.LastDateToSearch,
-                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 12, 18, 30, 0), new DateTime(2016, 10, 12, 23, 0, 0));
+                searchCriteria.TimesToSearch, searchCriteria.RestaurantsToSearch, new DateTime(2016, 10, 12, 18, 30, 0), new DateTime(2016, 10, 12, 20, 20, 0));
         }
 
         [Test, Explicit]
